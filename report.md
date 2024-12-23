@@ -1,15 +1,21 @@
 # Операционные системы UNIX/Linux (Базовый)
 ## Part 1. Установка ОС
-1. Устанавливаем ISO-файл с образом системы с официанльного сайта [https://ubuntu.com](url)
-2. Содаем VM в VirtualBox, подключаем к ней наш ISO.
+1. Устанавливаем ISO-файл с образом системы с официального сайта [https://ubuntu.com](url)
+2. Создаем VM в VirtualBox, подключаем к ней наш ISO.
 3. Устанавливаем, настраиваем систему.
 4. Проверка версии системы:
 
-![Вывод команды `cat /etc/issue`.](image/check_os.png)
+<figure>
+    <img src="images/check_os.png" alt="Вывод команды `cat /etc/issue`." />
+    <figcaption>Вывод команды cat /etc/issue.</figcaption>
+</figure>
 
 ## Part 2. Создание пользователя
 
-![Содание пользователя и добавление его в группу adm.](image/useradd.png)
+<figure>
+    <img src="images/useradd.png" alt="Содание пользователя и добавление его в группу adm." />
+    <figcaption>Содание пользователя и добавление его в группу adm.</figcaption>
+</figure>
 
 #### Объяснение команд:
 - `sudo useradd UserS21` – создает пользователя с именем UserS21;
@@ -19,57 +25,87 @@
 
 Проверяем наличие записи о новом пользователе в файле /etc/passwd:
 
-![Вывод команды `cat /etc/passwd | grep UserS21`.](image/passwd.png)
+<figure>
+    <img src="images/passwd.png" alt="Вывод команды `cat /etc/passwd | grep UserS21`." />
+    <figcaption>Вывод команды cat /etc/passwd | grep UserS21.</figcaption>
+</figure>
 
 ## Part 3. Настройка сети ОС
 #### Имя машины
 - Задаем новое название машины, используя команду `sudo hostnamectl set-hostname user-1`;
 - Проверяем имя машины командой `hostnamectl`.
 
-![Вывод команды `hostnamectl`.](image/hostnamectl.png)
+<figure>
+    <img src="images/hostnamectl.png" alt="Вывод команды `hostnamectl`." />
+    <figcaption>Вывод команды hostnamectl.</figcaption>
+</figure>
 
 #### Временная зона
 - Устанавливаем временную зону по нашему местоположению при помощи команды `sudo timedatectl set-timezone Europe/Moscow`;
 - Проверяем временную зону командой `timedatectl`.
 
-![Вывод команды `timedatectl`.](image/timedatectl.png)
+<figure>
+    <img src="images/timedatectl.png" alt="Вывод команды `timedatectl`." />
+    <figcaption>Вывод команды timedatectl.</figcaption>
+</figure>
 
 #### Названия сетевых интерфейсов
 - Выводим названия сетевых интерфейсов, используя команду `ifconfig`.
 
-![Вывод команды `ifconfig`.](image/ifconfig.png)
+<figure>
+    <img src="images/ifconfig.png" alt="Вывод команды `ifconfig`." />
+    <figcaption>Вывод команды ifconfig.</figcaption>
+</figure>
 
 *Интерфейс lo устанавливается автоматически при загрузке системы в большинстве дистрибутивов Linux. Он является стандартным компонентом ядра Linux, который создается и настраивается при старте системы. Благодаря этому интерфейсу, пользовательские программы могут взаимодействовать друг с другом, используя стандартные сетевые протоколы, такие как TCP/IP, но без участия внешнего оборудования.*
 
 #### DHCP
 - Используя команду `ifconfig`, узнаем ip адрес устройства от DHCP.
 
-![Вывод команды `ifconfig`.](image/ifconfig-2.png)
+<figure>
+    <img src="images/ifconfig-2.png" alt="Вывод команды `ifconfig`." />
+    <figcaption>Вывод команды ifconfig.</figcaption>
+</figure>
 
 - Теперь установим пакет для работы с dhclient, для этого используем команду `sudo apt install isc-dhcp-client`;
 - Затем нам необходимо сбросить нынешний ip адрес устройства, сделаем это командой `sudo dhclient -r enp0s3`;
 - Проверим вывод команды `ifconfig`, чтобы убедиться в том, что на данный момент у нас отстуствует ip адрес;
 
-![Вывод команды ifconfig.](image/dhclient-r.png)
+<figure>
+    <img src="images/dhclient-r.png" alt="Вывод команды `ifconfig`." />
+    <figcaption>Вывод команды ifconfig.</figcaption>
+</figure>
 
 - Получаем новый ip адрес с использованием команды `sudo dhclient -v enp0s3`;
 
-![Команда `dhclient -v` отработала.](image/dhclient-v.png)
+<figure>
+    <img src="images/dhclient-v.png" alt="Команда `dhclient -v` отработала." />
+    <figcaption>Команда dhclient -v отработала.</figcaption>
+</figure>
 
 - Вновь проверим вывод команды `ifconfig`, убедимся, что нам был присвоен новый ip адрес.
 
-![Вывод команды `ifconfig`.](image/ifconfig-3.png)
+<figure>
+    <img src="images/ifconfig-3.png" alt="Вывод команды `ifconfig`." />
+    <figcaption>Вывод команды ifconfig.</figcaption>
+</figure>
 
 *DHCP (Dynamic Host Configuration Protocol) — это сетевой протокол, используемый для автоматического назначения IP-адресов устройствам в сети.*
 
 #### IP адреса
 - Узнаем свой внешний ip адрес командой `curl ifconfig.me/ip`;
 
-![Вывод команды `curl ifconfig.me/ip`.](image/ifconfig.me.png)
+<figure>
+    <img src="images/ifconfig.me.png" alt="Вывод команды `curl ifconfig.me/ip`." />
+    <figcaption>Вывод команды curl ifconfig.me/ip.</figcaption>
+</figure>
 
 - Узнаем внутренний ip (gw/gateway) командой `route -n`.
 
-![Вывод команды `route -n`.](image/route-n.png)
+<figure>
+    <img src="images/route-n.png" alt="Вывод команды `route -n`." />
+    <figcaption>Вывод команды route -n.</figcaption>
+</figure>
 
 #### Статический IP
 **Для выполнения этого задания я проверяю содержимое директории /etc/netplan командой `ls`, там расположен файл 50-cloud-init.yaml, в него я и буду вносить правки.**
@@ -78,49 +114,79 @@
 2. Меняю *''dhcp4: true''* на *''dhcp4: false''*, это необходимо сделать с целью отключения получения адреса от DHCP;
 3. Задаем ip адрес и DNS (рекомендованные 1.1.1.1, 8.8.8.8);
 
-![Файл 50-cloud-init.yaml.](image/net-init.png)
+<figure>
+    <img src="images/net-init.png" alt="Файл 50-cloud-init.yaml." />
+    <figcaption>Файл 50-cloud-init.yaml.</figcaption>
+</figure>
 
 4. Сохраняем настройки конфигурации: `sudo netplan apply && sudo netplan try`;
 5. Перезапускаем систему командой `reboot`;
 6. Используем ifconfig для проверки полученного ip;
 
-![Вывод команды `ifconfig`.](image/ifconfStat.png)
+<figure>
+    <img src="images/ifconfStat.png" alt="Вывод команды `ifconfig`." />
+    <figcaption>Вывод команды ifconfig.</figcaption>
+</figure>
 
 7. Для проверки сети используем утилиту `ping`, пинганем хосты 1.1.1.1, 8.8.8.8 и ya.ru.
 
-![ping 1.1.1.1](image/ping1.png)
+<figure>
+    <img src="images/ping1.png" alt="ping 1.1.1.1." />
+    <figcaption>ping 1.1.1.1.</figcaption>
+</figure>
 
-![ping 8.8.8.8](image/ping2.png)
+<figure>
+    <img src="images/ping2.png" alt="ping 8.8.8.8." />
+    <figcaption>ping 8.8.8.8.</figcaption>
+</figure>
 
-![ping ya.ru](image/ping3.png)
+<figure>
+    <img src="images/ping3.png" alt="ping ya.ru." />
+    <figcaption>ping ya.ru.</figcaption>
+</figure>
 
 ## Part 4. Обновление ОС
 - Для обновления сис. пакетов воспользуемся командой `sudo apt upgrade`;
 - После окончания выполнения команды проверим доступные обновления пакетов командой `sudo apt update`.
 
-![Вывод команды `sudo apt update`.](image/apt-update.png)
+<figure>
+    <img src="images/apt-update.png" alt="Вывод команды `sudo apt update`." />
+    <figcaption>Вывод команды sudo apt update.</figcaption>
+</figure>
 
 ## Part 5. Использование команды sudo
 - Для выдачи привилегий суперпользователя пользователю UserS21, добавим его в группу sudo, для этого воспользуемся командой `sudo usermod -aG sudo UserS21 `;
 
-![Добавляем UserS21 в sudo.](image/usermod.png)
+<figure>
+    <img src="images/usermod.png" alt="Добавляем UserS21 в sudo." />
+    <figcaption>Добавляем UserS21 в sudo.</figcaption>
+</figure>
 
 - Для переключения на пользователя UserS21 используем команду `su UserS21`, вводим пароль пользователя;
 - Командой `whoami` убеждаемся, что являемся пользователем UserS21;
 - Меняем имя машины командой `hostnamectl set-hostname user-21`;
 - Проверяем имя машины.
 
-![Выполнение Part 5.](image/UserS21.png)
+<figure>
+    <img src="images/UserS21.png" alt="Выполнение Part 5." />
+    <figcaption>Выполнение Part 5.</figcaption>
+</figure>
 
 ## Part 6. Установка и настройка службы времени
 - Для выполнения данного задания установим службу автоматической синхронизации, Chrony, командой `sudo apt install chrony`;
 -  Выводим время часового пояса, в котором находимя, используя команду `date`; 
 
-![Вывод команды `date`.](image/date.png)
+<figure>
+    <img src="images/date.png" alt="Вывод команды `date`." />
+    <figcaption>Вывод команды date.</figcaption>
+</figure>
 
 - Используем команду `timedatectl show` для отображения подробной информации о текущей конфигурации времени и даты.
 
-![Вывод команды `timedatectl show`.](image/timedatectl_show.png)
+<figure>
+    <img src="images/timedatectl_show.png" alt="Вывод команды `timedatectl show`." />
+    <figcaption>Вывод команды timedatectl show.</figcaption>
+</figure>
 
 ## Part 7. Установка и использование текстовых редакторов
 #### Установка
@@ -129,84 +195,123 @@
 - Командой `touch` создаем три текстовых файла: test_vim.txt, test_nano.txt, test_joe.txt, а затем используя каждый из вышеуказанных редакторов напишем в каждом из файлов свой ник;
 #### 1. VIM
 
-![Скрин из vim'a.](image/vim_bjornnic.png)
+<figure>
+    <img src="images/vim_bjornnic.png" alt="Редактирование в vim с сохранением." />
+    <figcaption>Редактирование в vim с сохранением.</figcaption>
+</figure>
 
 *Для редактирования файла в vim необходимо нажать клавишу Insert. Для выхода из режима редактирования используется клавиша Esc. Для выхода из редактора с сохранением изменений необходимо написать команду `:wq` и нажать клавишу Enter.*
 
 #### 2. NANO
 
-![Скрин из nano.](image/nano_bjornnic.png)
+<figure>
+    <img src="images/nano_bjornnic.png" alt="Редактирование в nano с сохранением." />
+    <figcaption>Редактирование в nano с сохранением.</figcaption>
+</figure>
 
 *Для закрытия файла с сохранением изменений в nano необходимо зажать сочетание клавиш Ctrl+O, указать имя файла, зажать сочетание клавиш Ctrl+X.*
 
 #### 3. JOE
 
-![Скрин из joe.](image/joe_bjornnic.png)
+<figure>
+    <img src="images/joe_bjornnic.png" alt="Редактирование в joe с сохранением." />
+    <figcaption>Редактирование в joe с сохранением.</figcaption>
+</figure>
 
 *Для закрытия файла с сохранением изменений в joe необходимо зажать сочетание клавиш Ctrl+K, клавишу X.*
 
 #### Редактирование файла без сохранения изменений
 #### 1. VIM
 
-![Скрин из vim'a.](image/vim_school21.png)
+<figure>
+    <img src="images/vim_school21.png" alt="Редактирование в vim без сохранения." />
+    <figcaption>Редактирование в vim без сохранения.</figcaption>
+</figure>
 
 *Для выхода из vim без сохранения изменений необходимо нажать клавишу Esc и написать команду `:q!`, нажать клавишу Enter.*
 
 #### 2. NANO
 
-![Скрин из nano.](image/nano_school21.png)
+<figure>
+    <img src="images/nano_school21.png" alt="Редактирование в nano без сохранения." />
+    <figcaption>Редактирование в nano без сохранения.</figcaption>
+</figure>
 
 *Для выхода из nano без сохранения изменений необходимо зажать сочетание клавиш Ctrl+X и отказаться от сохранения файла клавишей N.*
 
 #### 3. JOE
 
-![Скрин из joe.](image/joe_school21.png)
+<figure>
+    <img src="images/joe_school21.png" alt="Редактирование в joe без сохранения." />
+    <figcaption>Редактирование в joe без сохранения.</figcaption>
+</figure>
 
-*Для выхода из joe без сохранения изменений необходимо зажать сочетание клавиш Ctrl+K, а затем отказаться от сохранения файла клавишей N.*
+*Для выхода из joe без сохранения изменений необходимо зажать сочетание клавиш Ctrl+K, клавишу C, а затем отказаться от сохранения файла.*
 
 #### Поиск и замена слов
 - Редактируем текстовые файлы по аналогии с предыдущим пунктом. Затем преступаем к поиску и замене содержимого файлов.
 #### 1. VIM
 *Для поиска содержимого в vim необходимо нажать клавишу Esc и ввести команду `/искомое_слово`, в нашем случае я буду искать слово "School", т.е. использую команду `/School`.*
 
-![Скрин из vim'a.](image/vim_search.png)
+<figure>
+    <img src="images/vim_search.png" alt="Замена в vim." />
+    <figcaption>Поиск в vim.</figcaption>
+</figure>
 
 *Для замены содержимого в vim необходимо использовать следующую команду: `:%s/искомое_слово/заменяющее_слово/g`, в нашем случае я буду менять слово "School" на "Oasis", т.е. использую команду `:%s/School/Oasis/g`.*
 
-![Скрин из vim'a.](image/vim_replace.png)
+<figure>
+    <img src="images/vim_replace.png" alt="Замена в vim." />
+    <figcaption>Замена в vim.</figcaption>
+</figure>
 
 #### 2. NANO
 *Для поиска содержимого в nano необходимо зажать сочетание клавиш Ctrl+W, ввести необходимое слово.*
 
-![Скрин из nano.](image/nano_search.png)
+<figure>
+    <img src="images/nano_search.png" alt="Поиск в nano." />
+    <figcaption>Поиск в nano.</figcaption>
+</figure>
 
 *Для замены содержимого найденного содержимого необходимо зажать сочетание кливиш Ctrl+R, ввести слово для замены.*
 
-![Скрин из nano.](image/nano_replace.png)
+<figure>
+    <img src="images/nano_replace.png" alt="Замена в nano." />
+    <figcaption>Замена в nano.</figcaption>
+</figure>
 
 #### 3. JOE
 *Для поиска содержимого в joe необходимо зажать сочетание клавиш Ctrl+K, клавишу F, ввести искомое слово, чтобы joe понимал, что поиск ограничивается целым словом используем конструкцию* \\<слово\\>.
 
-![Скрин из joe.](image/joe_search.png)
+<figure>
+    <img src="images/joe_search.png" alt="Поиск в joe." />
+    <figcaption>Поиск в joe.</figcaption>
+</figure>
 
 *Для замены содержимого в joe после нахождения искомого слова используем сочетание Ctrl+K, клавишу R, вводим необходимое слово для замены, нажимаем Enter, соглашаемся с изменением клавишей Y.*
 
-![Скрин из joe.](image/joe_replace.png)
+<figure>
+    <img src="images/joe_replace.png" alt="Замена в joe." />
+    <figcaption>Замена в joe.</figcaption>
+</figure>
 
 ## Part 8. Установка и базовая настройка сервиса SSHD
 - Для установки службы SSHd воспользуемся командой `sudo apt install ssh && sudo apt install openssh-server`;
 - Добавляем автостарт службы командой `sudo systemctl enable ssh`;
 - Чтобы перенастроить службу SSHd на порт 2022 отредактируем файл конфигурации SSHd в любом удобном текстовом редакторе, например в vim:
-1. Открываем файл конфигурации в vim командой vim /etc/ssh/ssh_config.
+1. Открываем файл конфигурации в vim командой `vim /etc/ssh/ssh_config`.
 2. Находим строку содержащую "Port 22", раскомментируем ее, убрав решетку слева, поменяем значение порта на "2022".
 3. Выйдем из файла с сохранением изменений.
 
-![vim /etc/ssh/ssh_config](image/vim_ssh_config.png)
+<figure>
+    <img src="images/vim_ssh_config.png" alt="vim /etc/ssh/ssh_config." />
+    <figcaption>vim /etc/ssh/ssh_config.</figcaption>
+</figure>
 
 - Используем команду `ps -aux | grep sshd` для поиска процесса sshd, где `ps` – команда для вывода информации о процессах, ключ `-a` – выводит информацию о процессах всех пользователей, исключением являются фоновые процессы; ключ `-u` – добавляет информацию об имени пользователя и времени запуска процесса; ключ `-x` – выводит информацию о всех процессах в фоновом режиме; `|` – пайп для передачи вывода команды `ps` на вход команде `grep`; `grep` – команда для поиска строк по заданному шаблону.
 
 <figure>
-    <img src="image/ps_sshd.png" alt="Вывод команды `ps -aux | grep sshd`." />
+    <img src="images/ps_sshd.png" alt="Вывод команды `ps -aux | grep sshd`." />
     <figcaption>Вывод команды ps -aux | grep sshd.</figcaption>
 </figure>
 
@@ -214,7 +319,7 @@
 - Используем команду `netstat -tan` для вывода списка открытых портов и соответствующих им адресов;
 
 <figure>
-    <img src="image/netstat-tan.png" alt="Вывод команды `netstat -tan`." />
+    <img src="images/netstat-tan.png" alt="Вывод команды `netstat -tan`." />
     <figcaption>Вывод команды netstat -tan.</figcaption>
 </figure>
 
@@ -247,7 +352,7 @@
 - Запускаем утилиту `top`:
 
 <figure>
-    <img src="image/top.png" alt="Вывод `top`." />
+    <img src="images/top.png" alt="Вывод `top`." />
     <figcaption>Вывод команды top.</figcaption>
 </figure>
 
@@ -264,37 +369,37 @@
 - **Вывод команды htop:**
 
 <figure>
-    <img src="image/htop-pid.png" alt="Вывод `htop` по PID." />
+    <img src="images/htop-pid.png" alt="Вывод `htop` по PID." />
     <figcaption>Вывод, отсортированный по PID.</figcaption>
 </figure>
 
 <figure>
-    <img src="image/htop-cpu.png" alt="Вывод `htop` по PERCENT_CPU." />
+    <img src="images/htop-cpu.png" alt="Вывод `htop` по PERCENT_CPU." />
     <figcaption>Вывод, отсортированный по PERCENT_CPU.</figcaption>
 </figure>
 
 <figure>
-    <img src="image/htop-mem.png" alt="Вывод `htop` по PERCENT_MEM." />
+    <img src="images/htop-mem.png" alt="Вывод `htop` по PERCENT_MEM." />
     <figcaption>Вывод, отсортированный по PERCENT_MEM.</figcaption>
 </figure>
 
 <figure>
-    <img src="image/htop-time.png" alt="Вывод `htop` по TIME." />
+    <img src="images/htop-time.png" alt="Вывод `htop` по TIME." />
     <figcaption>Вывод, отсортированный по TIME.</figcaption>
 </figure>
 
 <figure>
-    <img src="image/htop-sshd.png" alt="Вывод `htop` процесса sshd." />
+    <img src="images/htop-sshd.png" alt="Вывод `htop` процесса sshd." />
     <figcaption>Вывод htop процесса sshd.</figcaption>
 </figure>
 
 <figure>
-    <img src="image/htop-syslog.png" alt="Вывод `htop` процесса syslog." />
+    <img src="images/htop-syslog.png" alt="Вывод `htop` процесса syslog." />
     <figcaption>Вывод htop процесса syslog.</figcaption>
 </figure>
 
 <figure>
-    <img src="image/htop-htu.png" alt="Вывод команды `htop` с uptime, hostname, clock." />
+    <img src="images/htop-htu.png" alt="Вывод команды `htop` с uptime, hostname, clock." />
     <figcaption>Вывод htop с uptime, hostname, clock.</figcaption>
 </figure>
 
@@ -303,7 +408,7 @@
 - Запускаем команду `fdisk -l`:
 
 <figure>
-    <img src="image/fdisk-l.png" alt="Вывод команды `fdisk -l`." />
+    <img src="images/fdisk-l.png" alt="Вывод команды `fdisk -l`." />
     <figcaption>Вывод команды fdisk -l.</figcaption>
 </figure>
 
@@ -315,37 +420,41 @@
 
 	- Количество секторов: 52428800.
 
-Дописать про своп........................
+- Для получения размера swap используем команду `free -h`;
 
+<figure>
+    <img src="images/swap.png" alt="Вывод команды `free -h`." />
+    <figcaption>Вывод команды free -h.</figcaption>
+</figure>
 
 ## Part 11. Использование утилиты df
 - Запускаем команду `df`:
 
 <figure>
-    <img src="image/df.png" alt="Вывод команды `df`." />
+    <img src="images/df.png" alt="Вывод команды `df`." />
     <figcaption>Вывод команды df.</figcaption>
 </figure>
 
 - Вывод команды `df` для корневого раздела:
 
 	- Размер раздела: 11758760.
-	- Размер занятого пространства: 2543860.
-	- Размер свободного пространства: 8595792.
-	- Процент использования: 23%.
+	- Размер занятого пространства: 2692396.
+	- Размер свободного пространства: 8447256.
+	- Процент использования: 25%.
 	- Единица измерения в выводе: килобайт.
 - Запускаем команду `df -Th`:
 
 <figure>
-    <img src="image/df-Th.png" alt="Вывод команды `df -Th`." />
+    <img src="images/df-Th.png" alt="Вывод команды `df -Th`." />
     <figcaption>Вывод команды df -Th.</figcaption>
 </figure>
 
 - Вывод команды `df -Th` для корневого раздела:
 
 	- Размер раздела: 12 GB.
-	- Размер занятого пространства: 2,5 GB.
-	- Размер свободного пространства: 8,2 GB.
-	- Процент использования: 23%
+	- Размер занятого пространства: 2,6 GB.
+	- Размер свободного пространства: 8,1 GB.
+	- Процент использования: 25%
 	- Тип файловой системы: ext4.
 
 ## Part 12. Использование утилиты du
@@ -353,28 +462,28 @@
 - Запускаем команду `du`:
 
 <figure>
-    <img src="image/du.png" alt="Вывод команды `du`." />
+    <img src="images/du.png" alt="Вывод команды `du`." />
     <figcaption>Вывод команды du.</figcaption>
 </figure>
 
-- Для вывода размеров директорий /home, /var, /var/log в байтах используем команду `du -sb /home /var /var/log`.
+- Для вывода размеров директорий /home, /var, /var/log в байтах используем команду `sudo du -sb /var/log /home /var`.
 
 <figure>
-    <img src="image/du-bytes.png" alt="Вывод команды `du -sb /home /var /var/log`." />
-    <figcaption>Вывод команды du -sb /home /var /var/log.</figcaption>
+    <img src="images/du-bytes.png" alt="Вывод команды `sudo du -sb /var/log /home /var`." />
+    <figcaption>Вывод команды sudo du -sb /var/log /home /var.</figcaption>
 </figure>
 
-- Для вывода размеров директорий /home, /var, /var/log в человекочитаемом виде, используем команду `du -sh /home /var /var/log`.
+- Для вывода размеров директорий /home, /var, /var/log в человекочитаемом виде, используем команду `sudo du -sh /var/log /home /var`.
 
 <figure>
-    <img src="image/du-human.png" alt="Вывод команды `du -sh /home /var /var/log`." />
-    <figcaption>Вывод команды du -sh /home /var /var/log.</figcaption>
+    <img src="images/du-human.png" alt="Вывод команды `sudo du -sh /var/log /home /var`." />
+    <figcaption>Вывод команды sudo du -sh /var/log /home /var.</figcaption>
 </figure>
 
 - Для вывода размера всего содержимого в директории /var/log, используем команду `du -h /var/log/*`.
 
 <figure>
-    <img src="image/du-h-var.png" alt="Вывод команды `du -h /var/log/*`." />
+    <img src="images/du-h-var.png" alt="Вывод команды `du -h /var/log/*`." />
     <figcaption>Вывод команды du -h /var/log/*.</figcaption>
 </figure>
 
@@ -384,21 +493,21 @@
 - Для вывода размера директории /home при помощи утилиты ncdu используем команду `ncdu /home`.
 
 <figure>
-    <img src="image/ncdu-home.png" alt="Вывод команды `ncdu /home`." />
+    <img src="images/ncdu-home.png" alt="Вывод команды `ncdu /home`." />
     <figcaption>Вывод команды ncdu /home.</figcaption>
 </figure>
 
 - Для вывода размера директории /var при помощи утилиты ncdu используем команду `ncdu /var`.
 
 <figure>
-    <img src="image/ncdu-var.png" alt="Вывод команды `ncdu /var`." />
+    <img src="images/ncdu-var.png" alt="Вывод команды `ncdu /var`." />
     <figcaption>Вывод команды ncdu /var.</figcaption>
 </figure>
 
 - Для вывода размера директории /var при помощи утилиты ncdu используем команду `ncdu /var/log`.
 
 <figure>
-    <img src="image/ncdu-var-log.png" alt="Вывод команды `ncdu /var/log`." />
+    <img src="images/ncdu-var-log.png" alt="Вывод команды `ncdu /var/log`." />
     <figcaption>Вывод команды ncdu /var/log.</figcaption>
 </figure>
 
@@ -413,7 +522,7 @@
 #### Информация о последней успешной авторизации
 
 <figure>
-    <img src="image/auth-log.png" alt="Вывод команды `cat /var/log/auth.log`." />
+    <img src="images/auth-log.png" alt="Вывод команды `cat /var/log/auth.log`." />
     <figcaption>Вывод команды cat /var/log/auth.log.</figcaption>
 </figure>
 
@@ -425,7 +534,7 @@
 - Проверяем сис. логи, чтобы проверить, что служба SSHd действительно перезапустилась, командой `cat /var/log/syslog`.
 
 <figure>
-    <img src="image/restart-sshd.png" alt="Вывод команды `cat /var/log/syslog`." />
+    <img src="images/restart-sshd.png" alt="Вывод команды `cat /var/log/syslog`." />
     <figcaption>Вывод команды cat /var/log/syslog.</figcaption>
 </figure>
 
@@ -435,22 +544,29 @@
 - Для добавления задачи, которая будет каждые 2 минуты запускать команду `uptime`, необходимо добавить следующую строчку в крон-файл: */2 * * * * uptime.
 
 <figure>
-    <img src="image/crontab-e.png" alt="Добавляем задачу в crontab." />
+    <img src="images/crontab-e.png" alt="Добавляем задачу в crontab." />
     <figcaption>Добавляем задачу в crontab.</figcaption>
 </figure>
 
 - Для вывода списка текущих задач CRON используем команду `crontab -l`.
 
 <figure>
-    <img src="image/crontab-l.png" alt="Вывод команды `crontab -l`." />
+    <img src="images/crontab-l.png" alt="Вывод команды `crontab -l`." />
     <figcaption>Вывод команды crontab -l.</figcaption>
+</figure>
+
+- Проверяем логи для, чтобы убедиться в выполнении задач.
+
+<figure>
+    <img src="images/cron-log.png" alt="Логи со строчками о выполнении задач CRON." />
+    <figcaption>Логи со строчками о выполнении задач CRON.</figcaption>
 </figure>
 
 #### Удаление задач из CRON
 - Для удаления всех задач из планировщика, необходимо воспользоваться командой `crontab -r`.
 
 <figure>
-    <img src="image/crontab-r.png" alt="Удаляем задачи из CRON." />
+    <img src="images/crontab-r.png" alt="Удаляем задачи из CRON." />
     <figcaption>Удаляем задачи из CRON, проверяем отсутствие задач.</figcaption>
 </figure>
 
